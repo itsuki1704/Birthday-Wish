@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Happy Birthday Kai</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    height:100vh;
+    overflow:hidden;
+    background:
+    radial-gradient(circle at top,#1e3a8a 0%,#0f172a 45%,#020617 100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    color:white;
+}
+
+/* Stars */
+
+.star{
+    position:absolute;
+    border-radius:50%;
+    background:white;
+    animation: twinkle linear infinite;
+}
+
+@keyframes twinkle{
+    0%{opacity:0.2;}
+    50%{opacity:1;}
+    100%{opacity:0.2;}
+}
+
+/* Main Card */
+
+.scene{
+    perspective:1500px;
+}
+
+.card{
+    width:370px;
+    height:520px;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform 1s;
+}
+
+.card.flipped{
+    transform:rotateY(180deg);
+}
+
+.side{
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:28px;
+    backface-visibility:hidden;
+    overflow:hidden;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 0 35px rgba(0,0,0,0.4);
+    padding:30px;
+}
+
+.front{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.back{
+    transform:rotateY(180deg);
+    text-align:center;
+}
+
+h1{
+    font-size:3rem;
+    margin-bottom:10px;
+    background:linear-gradient(to right,#93c5fd,#67e8f9,#c4b5fd);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+h2{
+    font-size:2rem;
+    margin-bottom:18px;
+}
+
+p{
+    line-height:1.7;
+    color:#dbeafe;
+    margin-bottom:25px;
+}
+
+button{
+    border:none;
+    padding:14px 28px;
+    border-radius:50px;
+    background:linear-gradient(135deg,#38bdf8,#818cf8);
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:600;
+    box-shadow:0 0 18px rgba(56,189,248,0.5);
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.glow{
+    position:absolute;
+    width:300px;
+    height:300px;
+    background:#38bdf8;
+    filter:blur(140px);
+    opacity:0.18;
+    z-index:-1;
+}
+
+/* Photo */
+
+.photo-frame{
+    width:220px;
+    height:220px;
+    margin:20px auto;
+    border-radius:20px;
+    overflow:hidden;
+    border:3px solid rgba(255,255,255,0.25);
+    box-shadow:0 0 20px rgba(255,255,255,0.15);
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.quote{
+    margin-top:18px;
+    font-size:1.05rem;
+    color:#bfdbfe;
+}
+
+.music-note{
+    position:absolute;
+    font-size:20px;
+    animation: floatMusic 5s linear infinite;
+    opacity:0.5;
+}
+
+@keyframes floatMusic{
+    from{
+        transform:translateY(100vh);
+    }
+    to{
+        transform:translateY(-120px);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<!-- Stars -->
+<script>
+for(let i=0;i<80;i++){
+    let star=document.createElement("div");
+    star.classList.add("star");
+
+    let size=Math.random()*3;
+
+    star.style.width=size+"px";
+    star.style.height=size+"px";
+
+    star.style.left=Math.random()*100+"vw";
+    star.style.top=Math.random()*100+"vh";
+
+    star.style.animationDuration=(2+Math.random()*5)+"s";
+
+    document.body.appendChild(star);
+}
+
+/* Floating music notes */
+
+const notes=["🎵","🎶","✨","💫"];
+
+for(let i=0;i<20;i++){
+    let note=document.createElement("div");
+
+    note.classList.add("music-note");
+
+    note.innerHTML=notes[Math.floor(Math.random()*notes.length)];
+
+    note.style.left=Math.random()*100+"vw";
+    note.style.animationDuration=(5+Math.random()*8)+"s";
+    note.style.fontSize=(18+Math.random()*15)+"px";
+
+    document.body.appendChild(note);
+}
+</script>
+
+<div class="scene">
+
+    <div class="card" id="card">
+
+        <!-- Front -->
+        <div class="side front">
+
+            <h1>Happy Birthday</h1>
+
+            <h2>Kai 🎂</h2>
+
+            <p>
+                Another year older,
+                another year more amazing.
+                Hope your day is filled with happiness,
+                laughter, memories and all the things you love.
+            </p>
+
+            <button onclick="flipCard()">
+                Open Your Surprise ✨
+            </button>
+
+        </div>
+
+        <!-- Back -->
+        <div class="side back">
+
+            <h2>For You, Kai 🌙</h2>
+
+            <div class="photo-frame">
+
+                <!-- PUT IMAGE NAME HERE -->
+                <img src="kai.jpg" alt="Kai Photo">
+
+            </div>
+
+            <p class="quote">
+                “Some people make the world brighter just by existing.”
+            </p>
+
+            <p>
+                Stay awesome, keep smiling,
+                and never lose the light that makes you... you.
+            </p>
+
+            <button onclick="moreConfetti()">
+                Celebrate Again 🎉
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function flipCard(){
+
+    document.getElementById("card").classList.add("flipped");
+
+    confetti({
+        particleCount:180,
+        spread:120,
+        origin:{ y:0.6 }
+    });
+
+    setTimeout(()=>{
+        confetti({
+            particleCount:120,
+            angle:60,
+            spread:80,
+            origin:{x:0}
+        });
+
+        confetti({
+            particleCount:120,
+            angle:120,
+            spread:80,
+            origin:{x:1}
+        });
+
+    },400);
+}
+
+function moreConfetti(){
+
+    confetti({
+        particleCount:250,
+        spread:160
+    });
+
+}
+
+</script>
+
+</body>
+</html>
